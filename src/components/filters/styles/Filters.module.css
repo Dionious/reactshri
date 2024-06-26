@@ -1,0 +1,21 @@
+.filters {
+    padding: 24px;
+    background-color:#fff;
+    width: max-content;
+    border-radius: 8px;
+    margin: 20px 24px 20px 32px;
+}
+.filters__header {
+    font-family: "Roboto", serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #1B1F23;
+    margin-bottom: 20px;
+}
+.filters__wrapper {
+    width: 360px;
+    display: flex;
+    row-gap: 16px;
+    flex-direction: column;
+}
