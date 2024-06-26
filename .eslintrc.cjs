@@ -20,7 +20,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "semi": [2, "always"],
-    "quotes": [2, "single", { "avoidEscape": true }],
+    "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
     "indent": ["error", "tab"],
     "react/jsx-indent": ["error", "tab"],
     "react/jsx-indent-props": ["error", "tab"]

@@ -1,0 +1,16 @@
+.film-card-wrapper {
+    background-color: #fff;
+    width: 100%;
+    padding: 24px;
+    border-radius: 8px;
+    display: flex;
+    column-gap: 24px;
+}
+.poster {
+    width: 100px;
+    height: 120px;
+    border-radius: 8px;
+}
+.film-card-main-content {
+    max-width: 600px;
+}

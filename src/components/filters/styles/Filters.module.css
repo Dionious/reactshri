@@ -3,7 +3,8 @@
     background-color:#fff;
     width: max-content;
     border-radius: 8px;
-    margin: 20px 24px 20px 32px;
+    margin: 0 24px 20px 32px;
+    height: max-content;
 }
 .filters__header {
     font-family: "Roboto", serif;
