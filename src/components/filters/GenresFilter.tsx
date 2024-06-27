@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import Select, {StylesConfig} from 'react-select';
 import styles from './styles/GenresFilter.module.css';
-import CustomDropdownIndicator from './CustomDropdownIndicator'; // Импорт вашего компонента
+import CustomDropdownIndicator from './CustomDropdownIndicator';
+import { setGenre } from '../../api/filmsSlice'; //
 
 interface OptionType {
 	value: string;
@@ -51,6 +53,7 @@ const customStyles: StylesConfig<OptionType> = {
 };
 
 const GenresFilter: React.FC = () => {
+	const dispatch = useDispatch();
 	// const navigate = useNavigate();
 	// const location = useLocation();
 
@@ -61,6 +64,7 @@ const GenresFilter: React.FC = () => {
 
 	const handleGenreChange = (selectedOption: OptionType | null) => {
 		selectedOption?.value === '' ? setSelectedGenre(null) : setSelectedGenre(selectedOption);
+		dispatch(setGenre(selectedOption?.value || ''));
 	};
 
 	// const updateQueryParams = (params: { [key: string]: string }) => {

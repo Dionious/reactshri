@@ -1,5 +1,5 @@
 import React from 'react';
-import { Film } from '../../api/filmsSlice';
+import { Film } from '../../api/apiSlice';
 import styles from './styles/FilmCard.module.css';
 
 interface FilmCardProps {

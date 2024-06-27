@@ -13,7 +13,7 @@ function App() {
 			<div className={'content-wrapper'}>
 				<Filters />
 				<div className={'films-wrapper'}>
-					<SearchFilmInput onChange={() => console.log('here')} />
+					<SearchFilmInput onChange={(value) => console.log('Filter value:', value)} />
 					<FilmList></FilmList>
 				</div>
 			</div>
