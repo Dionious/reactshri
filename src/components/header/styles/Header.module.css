@@ -19,7 +19,7 @@
     padding: 26px 0 26px 32px;
 }
 
-.header__login {
+.header__login, .header__form-login, .header__login-cancel  {
     width: 72px;
     height: 40px;
     padding: 8px 16px 8px 16px;
@@ -33,7 +33,70 @@
     color: #fff;
     margin-right: 32px;
 }
+.header__form-login {
+    margin-right: 8px;
+}
+.userMenu {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+}
+.userIcon {
+    background: url("../assets/user.svg") no-repeat center;
+    width: 48px;
+    height: 48px;
+    display: block;
+}
+.logoutButton {
+    color: #FF5500;
+    background: #333;
+    border-width: 1px;
+    border-color: #FF5500;
+    width: 80px;
+}
 
+.closeButton {
+    cursor: pointer;
+    position: absolute;
+    right: 5%;
+    font-size: 25px;
+}
+.header__form-login-cancel {
+    width: 98px;
+    height: 40px;
+    border-radius: 8px;
+    background: #fff;
+    border-width: 1px;
+    color: #FF5500;
+    border-color: #FF5500;
+}
 .header__login:hover {
     background-color: #e04a00; /* Цвет при наведении */
+}
+.logoutButton:hover {
+    background-color: inherit;
+}
+.form {
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+}
+
+.custom-input {
+    border-radius: 8px;
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0;
+    width: 300px;
+    height: 40px;
+}
+
+input {
+    appearance: none;
+    background-color: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
 }
