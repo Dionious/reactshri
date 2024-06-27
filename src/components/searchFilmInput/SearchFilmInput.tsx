@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import styles from './styles/SearchFilmInput.module.css';
 import { useDispatch } from 'react-redux';
-import { setTitle } from '../../api/filmsSlice';
+import { setTitle } from '../../slices/filmsSlice';
 import debounce from 'lodash.debounce'; // Импорт debounce
 
-interface CustomInputFieldProps {
-	onChange: (value: string | null) => void;
-}
-
-const CustomInputField: React.FC<CustomInputFieldProps> = ({ onChange }) => {
+const SearchFilmInput: React.FC = () => {
 	const dispatch = useDispatch();
 	const [inputValue, setInputValue] = useState<string>('');
 
 	// Создание функции-обработчика с использованием debounce
 	const handleInputChangeDebounced = debounce((value: string) => {
 		dispatch(setTitle(value));
-		onChange(value);
 	}, 500); // Установка задержки в 300 мс
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +22,6 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({ onChange }) => {
 	const handleClearInput = () => {
 		setInputValue('');
 		dispatch(setTitle(''));
-		onChange('');
 	};
 
 	return (
@@ -46,4 +40,4 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({ onChange }) => {
 	);
 };
 
-export default CustomInputField;
+export default SearchFilmInput;

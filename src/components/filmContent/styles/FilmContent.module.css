@@ -1,0 +1,16 @@
+.film-content-wrapper {
+    background-color: #fff;
+    max-width: 100%;
+    border-radius: 8px;
+    display: flex;
+    column-gap: 24px;
+    padding: 24px;
+}
+.poster {
+    width: 400px;
+    height: 500px;
+    border-radius: 8px;
+}
+.film-content {
+    max-width: 600px;
+}

@@ -15,6 +15,16 @@ interface SearchResponse {
 	total_pages: number;
 }
 
+type Actor = {
+	name: string;
+	photo: string;
+}
+
+export interface Movie extends Film {
+	actors: Array<Actor>;
+	total_rates_count: string;
+}
+
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/api/v1/' }),
@@ -28,7 +38,10 @@ export const apiSlice = createApi({
 				return queryString;
 			},
 		}),
+		getFilmById: builder.query<Movie, string>({
+			query: (id) => `movie/${id}`, // Эндпоинт для получения фильма по ID
+		}),
 	}),
 });
 
-export const { useFetchFilmsQuery } = apiSlice;
+export const { useFetchFilmsQuery, useGetFilmByIdQuery } = apiSlice;

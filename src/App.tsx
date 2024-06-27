@@ -4,18 +4,21 @@ import Filters from './components/filters/Filters';
 import SearchFilmInput from './components/searchFilmInput/SearchFilmInput';
 import store from './store/store';
 import { Provider } from 'react-redux';
-import FilmList from './components/filmList/FilmList';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import FilmsListPage from './pages/FilmsListPage'; // Assuming this is your FilmsListPage component
+import FilmPage from './pages/FilmPage'; // Assuming this is your FilmPage component
 
 function App() {
 	return (
 		<Provider store={store}>
 			<Header/>
-			<div className={'content-wrapper'}>
-				<Filters />
-				<div className={'films-wrapper'}>
-					<SearchFilmInput onChange={(value) => console.log('Filter value:', value)} />
-					<FilmList></FilmList>
-				</div>
+			<div style={{ padding: '20px' }}>
+				<Router>
+					<Routes>
+						<Route path="/" element={<FilmsListPage />} />
+						<Route path="/films/:id" element={<FilmPage />} />
+					</Routes>
+				</Router>
 			</div>
 		</Provider>
 	);

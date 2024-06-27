@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
-import Select, {StylesConfig} from 'react-select';
+import { useDispatch, useSelector } from 'react-redux';
+import Select, { StylesConfig } from 'react-select';
 import styles from './styles/GenresFilter.module.css';
 import CustomDropdownIndicator from './CustomDropdownIndicator';
-import { setGenre } from '../../api/filmsSlice'; //
+import { setGenre } from '../../slices/filmsSlice';
+import { RootState } from '../../store/store';
+import { useNavigate, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 interface OptionType {
 	value: string;
@@ -29,13 +30,13 @@ const genres: OptionType[] = [
 ];
 
 const customStyles: StylesConfig<OptionType> = {
-	control: (provided,state) => ({
+	control: (provided, state) => ({
 		...provided,
 		borderRadius: '8px',
 		boxShadow: 'none',
-		borderColor: state.menuIsOpen ? '#FF5500' : '#ccc', // Изменение цвета границы при открытом меню
+		borderColor: state.menuIsOpen ? '#FF5500' : '#ccc',
 		'&:hover': {
-			borderColor: state.menuIsOpen ? '#FF5500' : '#aaa', // Изменение цвета границы при наведении и открытом меню
+			borderColor: state.menuIsOpen ? '#FF5500' : '#aaa',
 		},
 	}),
 	menu: (provided) => ({
@@ -44,7 +45,7 @@ const customStyles: StylesConfig<OptionType> = {
 	}),
 	menuList: (provided) => ({
 		...provided,
-		maxHeight: 'none', // Опционально: если не нужен ограничивающий максимальный размер
+		maxHeight: 'none',
 	}),
 	option: (provided, state) => ({
 		...provided,
@@ -54,42 +55,40 @@ const customStyles: StylesConfig<OptionType> = {
 
 const GenresFilter: React.FC = () => {
 	const dispatch = useDispatch();
-	// const navigate = useNavigate();
-	// const location = useLocation();
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const queryParams = queryString.parse(location.search);
 	const initialSelectedGenre = genres.find((genre) => genre.value === queryParams.genre?.toString()) || null;
 	const [selectedGenre, setSelectedGenre] = useState<OptionType | null>(initialSelectedGenre);
 	const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
 
+	useEffect(() => {
+		if (initialSelectedGenre) {
+			dispatch(setGenre(initialSelectedGenre.value));
+		}
+	}, [initialSelectedGenre, dispatch]);
+
 	const handleGenreChange = (selectedOption: OptionType | null) => {
-		selectedOption?.value === '' ? setSelectedGenre(null) : setSelectedGenre(selectedOption);
-		dispatch(setGenre(selectedOption?.value || ''));
+		setSelectedGenre(selectedOption);
+
+		const genreValue = selectedOption?.value || '';
+		dispatch(setGenre(genreValue));
+		updateQueryParams({ genre: genreValue });
 	};
 
-	// const updateQueryParams = (params: { [key: string]: string }) => {
-	// 	const newParams = {
-	// 		...queryString.parse(location.search),
-	// 		...params,
-	// 	};
-	// 	const search = queryString.stringify(newParams);
-	// 	navigate({ search }, { replace: true });
-	// };
-
-	// useEffect(() => {
-	// 	const { genre } = queryString.parse(location.search);
-	// 	if (genre) {
-	// 		const selected = GENRES.find(g => g.value === genre.toString());
-	// 		setSelectedGenre(selected || { value: '0', label: 'Не выбран' });
-	// 	}
-	// }, [location.search]);
+	const updateQueryParams = (params: { [key: string]: string }) => {
+		const newParams = {
+			...queryString.parse(location.search),
+			...params,
+		};
+		const search = queryString.stringify(newParams, { skipEmptyString: true });
+		navigate({ search }, { replace: true });
+	};
 
 	return (
 		<div>
-			<label className={styles['genre-label']}>
-				Жанр
-
-			</label>
+			<label className={styles['genre-label']}>Жанр</label>
 			<Select
 				value={selectedGenre}
 				onChange={handleGenreChange}
@@ -97,9 +96,9 @@ const GenresFilter: React.FC = () => {
 				styles={customStyles}
 				components={{
 					IndicatorSeparator: () => null,
-					DropdownIndicator: (props) => <CustomDropdownIndicator {...props} menuIsOpen={menuIsOpen} />
+					DropdownIndicator: (props) => <CustomDropdownIndicator {...props} menuIsOpen={menuIsOpen} />,
 				}}
-				placeholder="Выберите жанр" // Placeholder для не выбранного состояния
+				placeholder="Выберите жанр"
 				onMenuOpen={() => setMenuIsOpen(true)}
 				onMenuClose={() => setMenuIsOpen(false)}
 			/>

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { setPage, setTotalPages } from '../../api/filmsSlice';
-import { useFetchFilmsQuery } from '../../api/apiSlice';
+import { setPage, setTotalPages } from '../../slices/filmsSlice';
+import { useFetchFilmsQuery } from '../../slices/apiSlice';
 import FilmCard from './FilmCard';
 import styles from './styles/FilmList.module.css';
 import Pagination from './Pagination';

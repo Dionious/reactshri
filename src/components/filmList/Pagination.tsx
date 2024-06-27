@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './styles/Pagination.module.css';
+import classNames from 'classnames';
 
 interface PaginationProps {
     currentPage: number;
@@ -13,17 +15,15 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 	}
 
 	return (
-		<div>
-			{pages.map((page) => (
-				<button
-					key={page}
-					onClick={() => onPageChange(page)}
-					style={{ fontWeight: page === currentPage ? 'bold' : 'normal' }}
-				>
-					{page}
-				</button>
-			))}
-		</div>
+		totalPages > 1 && (<div className={styles['pagination-container']}>
+			<div className={classNames(styles['pagination-left'], {
+				[styles['pagination-left-disabled']]: currentPage === 1,
+			})} onClick={() => onPageChange(currentPage > 1 ? currentPage - 1 : currentPage)}></div>
+			<span>{currentPage}</span>
+			<div className={classNames(styles['pagination-right'], {
+				[styles['pagination-right-disabled']]: currentPage === totalPages,
+			})} onClick={() => onPageChange(currentPage < totalPages ? currentPage + 1 : currentPage)}></div>
+		</div>)
 	);
 };
 

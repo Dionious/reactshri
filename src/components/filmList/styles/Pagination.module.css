@@ -1,0 +1,21 @@
+.pagination-container {
+    display: flex;
+    column-gap: 12px;
+    align-items: center;
+}
+.pagination-left, .pagination-right {
+    background: url("../assets/pagination.svg") no-repeat center;
+    width: 32px;
+    height: 32px;
+}
+.pagination-right {
+    transform: rotate(180deg);
+}
+.pagination-left-disabled, .pagination-right-disabled {
+    background: url("../assets/paginationDisabled.svg") no-repeat center;
+    width: 32px;
+    height: 32px;
+}
+.pagination-right-disabled {
+    transform: rotate(180deg);
+}
