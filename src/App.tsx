@@ -12,7 +12,7 @@ function App() {
 	return (
 		<Provider store={store}>
 			<Header/>
-			<div style={{ padding: '20px' }}>
+			<div style={{ padding: '20px', paddingRight: '70px' }}>
 				<Router>
 					<Routes>
 						<Route path="/" element={<FilmsListPage />} />

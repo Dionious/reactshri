@@ -5,12 +5,14 @@
     display: flex;
     column-gap: 24px;
     padding: 24px;
+    position: relative;
 }
 .poster {
     width: 400px;
     height: 500px;
     border-radius: 8px;
 }
-.film-content {
-    max-width: 600px;
+.wrapper {
+    display: flex;
+    justify-content: space-between;
 }

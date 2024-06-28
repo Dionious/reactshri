@@ -6,7 +6,7 @@ function FilmsListPage() {
 	return (
 		<div className={'content-wrapper'}>
 			<Filters />
-			<div className={'films-wrapper'}>
+			<div style={{ width: '100%' }} className={'films-wrapper'}>
 				<SearchFilmInput />
 				<FilmList></FilmList>
 			</div>

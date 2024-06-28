@@ -28,6 +28,7 @@ export interface Movie extends Film {
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/api/v1/' }),
+	tagTypes: ['Movie'],
 	endpoints: (builder) => ({
 		fetchFilms: builder.query<SearchResponse, { page: number; title: string; genre: string; releaseYear: string }>({
 			query: ({ page, title, genre, releaseYear }) => {
@@ -40,8 +41,21 @@ export const apiSlice = createApi({
 		}),
 		getFilmById: builder.query<Movie, string>({
 			query: (id) => `movie/${id}`, // Эндпоинт для получения фильма по ID
+			providesTags: (result, error, id) => [{ type: 'Movie', id }],
+		}),
+		rateMovie: builder.mutation<void, { token: string; movieId: string; user_rate: number }>({
+			query: ({ token, movieId, user_rate }) => ({
+				url: 'rateMovie',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ movieId, user_rate }),
+			}),
+			invalidatesTags: (result, error, { movieId }) => [{ type: 'Movie', id: movieId }],
 		}),
 	}),
 });
 
-export const { useFetchFilmsQuery, useGetFilmByIdQuery } = apiSlice;
+export const { useFetchFilmsQuery, useGetFilmByIdQuery, useRateMovieMutation } = apiSlice;

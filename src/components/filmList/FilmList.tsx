@@ -6,6 +6,7 @@ import { useFetchFilmsQuery } from '../../slices/apiSlice';
 import FilmCard from './FilmCard';
 import styles from './styles/FilmList.module.css';
 import Pagination from './Pagination';
+import Loader from '../loader/Loader';
 
 const FilmList: React.FC = () => {
 	const dispatch = useDispatch();
@@ -13,7 +14,8 @@ const FilmList: React.FC = () => {
 	const title = useSelector((state: RootState) => state.films.title);
 	const genre = useSelector((state: RootState) => state.films.genre);
 	const releaseYear = useSelector((state: RootState) => state.films.releaseYear);
-	const { data, error, isFetching } = useFetchFilmsQuery({page: currentPage, title, genre, releaseYear });
+	const { data, error, isFetching } = useFetchFilmsQuery({ page: currentPage, title, genre, releaseYear });
+
 	useEffect(() => {
 		if (data) {
 			dispatch(setTotalPages(data.total_pages));
@@ -25,11 +27,17 @@ const FilmList: React.FC = () => {
 	};
 
 	if (isFetching) {
-		return <div>Loading...</div>;
+		return (
+			<Loader/>
+		);
 	}
 
-	if (error) {
-		return <div>Error: {error.toString()}</div>;
+	if (data?.search_result.length === 0 ) {
+		return (
+			<div className={styles['no-films-container']}>
+				<div className={styles['not-found']}>Фильмы не найдены</div>
+				<div className={styles['repeat']}>Измените запрос и попробуйте снова</div>
+			</div>);
 	}
 
 	return (

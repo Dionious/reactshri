@@ -2,6 +2,7 @@ import React from 'react';
 import { Film } from '../../slices/apiSlice';
 import styles from './styles/FilmCard.module.css';
 import { Link } from 'react-router-dom';
+import RatingDisplay from '../ratingForm/RatingDisplay';
 
 interface FilmCardProps {
     film: Film;
@@ -17,6 +18,7 @@ const FilmCard: React.FC<FilmCardProps> = ({ film }) => {
 					<p>Жанр: {film.genre}</p>
 					<p>Год выпуска: {film.release_year}</p>
 					<p>Описание: {film.description}</p>
+					<RatingDisplay currentRating={Number(film.rating)} /> {/* Вставляем RatingDisplay с текущим рейтингом фильма */}
 				</div>
 			</div>
 		</Link>

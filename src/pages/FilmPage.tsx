@@ -2,13 +2,16 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetFilmByIdQuery } from '../slices/apiSlice';
 import FilmContent from '../components/filmContent/FilmContent';
-import Actors from "../components/actors/Actors"; // Подставьте путь к вашему API слайсу
+import Actors from '../components/actors/Actors';
+import Loader from '../components/loader/Loader'; // Подставьте путь к вашему API слайсу
 
 const FilmPage: React.FC = () => {
 	const { id } = useParams<{ id: string }>(); // Получаем параметр ID из URL
 	const { data: film, isLoading, isError } = useGetFilmByIdQuery(id); // Выполняем запрос к API
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return (
+			<Loader/>
+		);
 	}
 
 	if (isError) {
@@ -21,8 +24,8 @@ const FilmPage: React.FC = () => {
 
 	return (
 		<>
-			<FilmContent film={film}></FilmContent>
-			<Actors actors={film.actors}></Actors>
+			<FilmContent film={film} />
+			<Actors actors={film.actors} />
 		</>
 	);
 };

@@ -1,0 +1,40 @@
+.rating-form {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    position: absolute;
+    flex-direction: column;
+    right: 3%;
+    row-gap: 5px;
+}
+
+.star {
+    background: url('../assets/star.svg') no-repeat center;
+    width: 16px;
+    height: 16px;
+    mask: url('../assets/starActive.svg') no-repeat center;
+    -webkit-mask: url('../assets/starActive.svg') no-repeat center;
+    transition: background-color 0.2s;
+}
+
+.star.filled {
+    background-color: #FF5500; /* Цвет для заполненных звезд */
+}
+
+.star.hovered,
+.star:hover {
+    background-color: #ABABAB; /* Цвет при наведении */
+}
+.stars-wrapper {
+    display: flex;
+    column-gap: 6px;
+}
+.star-number-wrapper {
+    display: flex;
+    column-gap: 15px;
+}
+.star-number {
+    font-size: 14px;
+    color: #666; /* Цвет цифр */
+    text-align: center;
+}
