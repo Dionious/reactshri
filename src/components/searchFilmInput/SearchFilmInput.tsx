@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './styles/SearchFilmInput.module.css';
 import { useDispatch } from 'react-redux';
 import { setTitle } from '../../slices/filmsSlice';
-import debounce from 'lodash.debounce'; // Импорт debounce
+import debounce from 'lodash.debounce';
 
 const SearchFilmInput: React.FC = () => {
 	const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles/RatingForm.module.css';
-import debounce from 'lodash.debounce'; // Импортируем debounce из lodash
+import debounce from 'lodash.debounce';
 
 interface RatingFormProps {
     onRateMovie: (rating: number) => void;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles/FilmContent.module.css';
 import { Movie } from '../../slices/apiSlice';
-import { useRateMovieMutation } from '../../slices/apiSlice'; // Подставьте правильный путь
+import { useRateMovieMutation } from '../../slices/apiSlice';
 import RatingForm from '../ratingForm/RatingForm';
 
 interface FilmContentProps {

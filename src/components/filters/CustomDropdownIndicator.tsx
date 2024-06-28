@@ -1,9 +1,9 @@
 import React from 'react';
-import icon from './assets/icon.svg'; // Импорт SVG файла
+import icon from './assets/icon.svg';
 
 interface Props {
     className?: string;
-	menuIsOpen?: boolean; // Состояние открытого меню
+	menuIsOpen?: boolean;
 }
 
 const CustomDropdownIndicator: React.FC<Props> = ({ className, menuIsOpen }) => {

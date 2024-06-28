@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetFilmByIdQuery } from '../slices/apiSlice';
 import FilmContent from '../components/filmContent/FilmContent';
 import Actors from '../components/actors/Actors';
-import Loader from '../components/loader/Loader'; // Подставьте путь к вашему API слайсу
+import Loader from '../components/loader/Loader';
 
 const FilmPage: React.FC = () => {
 	const { id } = useParams<{ id: string }>(); // Получаем параметр ID из URL
