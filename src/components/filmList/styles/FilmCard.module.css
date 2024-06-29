@@ -15,3 +15,26 @@
 .film-card-main-content {
     max-width: 800px;
 }
+
+.film-card-main-content-wrapper {
+    display: flex;
+    column-gap: 16px;
+    margin-top: 16px;
+}
+
+.film-card-main-content-names {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.film-card-main-content-names > p {
+    color: #ABABAB;
+}
+
+.film-card-main-content-meanings {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    max-width: 600px;
+}

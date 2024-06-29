@@ -52,10 +52,23 @@ const FilmContent: React.FC<FilmContentProps> = ({ film }) => {
 					<h2>{film.title}</h2>
 					<RatingForm onRateMovie={handleRateMovie} currentRating={Number(film.rating)} />
 				</div>
-				<p>Жанр: {film.genre}</p>
-				<p>Год выпуска: {film.release_year}</p>
-				<p>Рейтинг: {film.total_rates_count}</p>
-				<p>Описание: {film.description}</p>
+				<div className={styles['film-content-container']}>
+					<div className={styles['film-content-element']}>
+						<span>Жанр: </span>
+						<span> {film.genre}</span>
+					</div>
+					<div className={styles['film-content-element']}>
+						<span>Год выпуска: </span>
+						<span>{film.release_year}</span>
+					</div>
+					<div className={styles['film-content-element']}>
+						<span>Рейтинг: </span>
+						<span>{film.total_rates_count}</span>
+					</div>
+
+					<p className={styles['description']}>Описание </p>
+					<p>{film.description}</p>
+				</div>
 				<div className={styles['rating-section']}>
 				</div>
 			</div>
