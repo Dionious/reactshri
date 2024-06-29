@@ -1,11 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import Select, { StylesConfig } from 'react-select';
-import styles from './styles/GenresFilter.module.css';
-import CustomDropdownIndicator from './CustomDropdownIndicator';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setGenre } from '@/slices/filmsSlice';
+import styles from './styles/GenresFilter.module.css';
 
 interface OptionType {
     value: string;
@@ -13,7 +11,7 @@ interface OptionType {
 }
 
 const genres: OptionType[] = [
-	{ value: '', label: 'Не выбран' },
+	{ value: 'all', label: 'Не выбран' },
 	{ value: 'comedy', label: 'Комедия' },
 	{ value: 'drama', label: 'Драма' },
 	{ value: 'action', label: 'Боевик' },
@@ -28,81 +26,48 @@ const genres: OptionType[] = [
 	{ value: 'war', label: 'Военный' },
 ];
 
-const customStyles: StylesConfig<OptionType> = {
-	control: (provided, state) => ({
-		...provided,
-		borderRadius: '8px',
-		boxShadow: 'none',
-		borderColor: state.menuIsOpen ? '#FF5500' : '#ccc',
-		'&:hover': {
-			borderColor: state.menuIsOpen ? '#FF5500' : '#aaa',
-		},
-	}),
-	menu: (provided) => ({
-		...provided,
-		borderRadius: '8px',
-	}),
-	menuList: (provided) => ({
-		...provided,
-		maxHeight: 'none',
-	}),
-	option: (provided, state) => ({
-		...provided,
-		color: state.isSelected ? 'white' : 'black',
-	}),
-};
-
-interface GenresFilterProps {
-    initialGenre?: string;
-}
-
-const GenresFilter: React.FC<GenresFilterProps> = ({ initialGenre }) => {
+const GenresFilter: React.FC = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const searchParams = useSearchParams();
-	const initialGenreParam = searchParams.get('genre') || '';
-	const [selectedGenre, setSelectedGenre] = useState<OptionType>({ value: '', label: 'Не выбран' });
-	const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+	const pathname = usePathname();
+	const initialGenreParam = pathname.split('/')[1] || '';
+	const initialYearParam = pathname.split('/')[2] || '';
+	const [selectedGenre, setSelectedGenre] = useState<string>('');
 
 	useEffect(() => {
 		const initialGenreOption = genres.find((genre) => genre.value === initialGenreParam) || genres[0];
-		setSelectedGenre(initialGenreOption);
-	}, [initialGenreParam]);
+		setSelectedGenre(initialGenreOption.value);
+		router.push(`${initialGenreOption.value}`);
+	}, [initialGenreParam, router]);
 
-	const handleGenreChange = (selectedOption: OptionType | null) => {
-		if (selectedOption) {
-			setSelectedGenre(selectedOption);
-			const genreValue = selectedOption.value !== '' ? selectedOption.value : undefined;
+	const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const genreValue = event.target.value;
+		setSelectedGenre(genreValue);
+
+		if (genreValue !== 'all') {
 			dispatch(setGenre(genreValue));
-
-			const params = new URLSearchParams(searchParams);
-			if (genreValue) {
-				params.set('genre', genreValue);
-			} else {
-				params.delete('genre');
-			}
-			const pathname = `?${params.toString()}`;
-			router.push(pathname);
+		} else {
+			dispatch(setGenre(''));
 		}
+
+		const newPath = genreValue ? `/${genreValue}/${initialYearParam}` : `/${initialYearParam}`;
+		router.push(newPath);
 	};
 
 	return (
 		<div>
 			<label className={styles['genre-label']}>Жанр</label>
-			<Select
-				instanceId={'genre'}
+			<select
 				value={selectedGenre}
 				onChange={handleGenreChange}
-				options={genres}
-				styles={customStyles}
-				components={{
-					IndicatorSeparator: () => null,
-					DropdownIndicator: (props) => <CustomDropdownIndicator {...props} menuIsOpen={menuIsOpen} />,
-				}}
-				placeholder="Выберите жанр"
-				onMenuOpen={() => setMenuIsOpen(true)}
-				onMenuClose={() => setMenuIsOpen(false)}
-			/>
+				className={styles['custom-select']}
+			>
+				{genres.map((genre) => (
+					<option key={genre.value} value={genre.value}>
+						{genre.label}
+					</option>
+				))}
+			</select>
 		</div>
 	);
 };

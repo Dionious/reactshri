@@ -54,7 +54,7 @@ const FilmContent: React.FC<FilmContentProps> = ({ film }) => {
 				</div>
 				<p>Жанр: {film.genre}</p>
 				<p>Год выпуска: {film.release_year}</p>
-				<p>Рейтинг: {film.total_rates_count}</p>
+				<p>Рейтинг: {film.rating}</p>
 				<p>Описание: {film.description}</p>
 				<div className={styles['rating-section']}>
 				</div>

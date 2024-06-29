@@ -1,11 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Select, { StylesConfig } from 'react-select';
-import styles from './styles/GenresFilter.module.css';
-import CustomDropdownIndicator from './CustomDropdownIndicator';
+import styles from './styles/ReleaseYearFilter.module.css';
+import { useRouter, usePathname } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { setReleaseYear } from '../../slices/filmsSlice';
+import { setReleaseYear} from '@/slices/filmsSlice';
 
 interface OptionType {
     value: string;
@@ -13,7 +11,7 @@ interface OptionType {
 }
 
 const releaseYears: OptionType[] = [
-	{ value: '', label: 'Не выбран' },
+	{ value: 'all', label: 'Не выбран' },
 	{ value: '2009', label: '2009' },
 	{ value: '2008', label: '2008' },
 	{ value: '2007', label: '2007' },
@@ -22,76 +20,47 @@ const releaseYears: OptionType[] = [
 	{ value: '1950-1989', label: '1950-1989' },
 ];
 
-const customStyles: StylesConfig<OptionType> = {
-	control: (provided, state) => ({
-		...provided,
-		borderRadius: '8px',
-		boxShadow: 'none',
-		borderColor: state.menuIsOpen ? '#FF5500' : '#ccc',
-		'&:hover': {
-			borderColor: state.menuIsOpen ? '#FF5500' : '#aaa',
-		},
-	}),
-	menu: (provided) => ({
-		...provided,
-		borderRadius: '8px',
-	}),
-	menuList: (provided) => ({
-		...provided,
-		maxHeight: 'none',
-	}),
-	option: (provided, state) => ({
-		...provided,
-		color: state.isSelected ? 'white' : 'black',
-	}),
-};
-
 const ReleaseYearFilter: React.FC = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const searchParams = useSearchParams();
-	const initialYearParam = searchParams.get('releaseYear') || '';
-	const [selectedYear, setSelectedYear] = useState<OptionType>({ value: initialYearParam, label: initialYearParam || 'Не выбран' });
-	const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+	const pathname = usePathname();
+	const initialGenreParam = pathname.split('/')[1] || '';
+	const initialYearParam = pathname.split('/')[2] || '';
+	const [selectedYear, setSelectedYear] = useState<OptionType>({ value: '', label: 'Не выбран' });
 
 	useEffect(() => {
-		setSelectedYear({ value: initialYearParam, label: initialYearParam || 'Не выбран' });
-	}, [initialYearParam]);
+		const initialYearOption = releaseYears.find((year) => year.value === initialYearParam) || releaseYears[0];
+		setSelectedYear(initialYearOption.value);
+		const newPath = `/${initialGenreParam}/${initialYearOption.value}`;
+		router.push(newPath);
+	}, [initialGenreParam, initialYearParam, router]);
 
-	const handleYearChange = (selectedOption: OptionType | null) => {
-		if (selectedOption) {
-			setSelectedYear(selectedOption);
-			const yearValue = selectedOption.value !== '' ? selectedOption.value : undefined;
-			dispatch(setReleaseYear(yearValue));
-
-			const params = new URLSearchParams(searchParams);
-			if (yearValue) {
-				params.set('releaseYear', yearValue);
-			} else {
-				params.delete('releaseYear');
-			}
-			const pathname = `?${params.toString()}`;
-			router.push(pathname);
+	const handleYearChange = (event) => {
+		const yearValue = event.target.value;
+		setSelectedYear(yearValue);
+		if (yearValue !== 'all') {
+			dispatch(setReleaseYear(yearValue.toString()));
 		}
+		else dispatch(setReleaseYear(''));
+
+		const newPath = yearValue ? `/${initialGenreParam}/${yearValue}` : `/${initialGenreParam}`;
+		router.push(newPath);
 	};
 
 	return (
 		<div>
 			<label className={styles['genre-label']}>Год выпуска</label>
-			<Select
-				instanceId={'year'}
+			<select
 				value={selectedYear}
 				onChange={handleYearChange}
-				options={releaseYears}
-				styles={customStyles}
-				components={{
-					IndicatorSeparator: () => null,
-					DropdownIndicator: (props) => <CustomDropdownIndicator {...props} menuIsOpen={menuIsOpen} />,
-				}}
-				placeholder="Выберите год"
-				onMenuOpen={() => setMenuIsOpen(true)}
-				onMenuClose={() => setMenuIsOpen(false)}
-			/>
+				className={styles['custom-select']}
+			>
+				{releaseYears.map((year) => (
+					<option key={year.value} value={year.value}>
+						{year.label}
+					</option>
+				))}
+			</select>
 		</div>
 	);
 };

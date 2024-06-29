@@ -55,8 +55,8 @@ export const apiSlice = createApi({
 			query: ({ page, title, genre, releaseYear }) => {
 				let queryString = `search?page=${page}`;
 				if (title) queryString += `&title=${title}`;
-				if (genre) queryString += `&genre=${genre}`;
-				if (releaseYear) queryString += `&release_year=${releaseYear}`;
+				if (genre && genre !== 'all') queryString += `&genre=${genre}`;
+				if (releaseYear && releaseYear !== 'all') queryString += `&release_year=${releaseYear}`;
 				return queryString;
 			},
 		}),
