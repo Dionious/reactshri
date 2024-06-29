@@ -50,7 +50,7 @@ const FilmContent: React.FC<FilmContentProps> = ({ film }) => {
 			<div className={styles['film-content']}>
 				<div className={styles['wrapper']}>
 					<h2>{film.title}</h2>
-					<RatingForm onRateMovie={handleRateMovie} currentRating={Number(film.rating)} />
+					<RatingForm onRateMovie={handleRateMovie} currentRating={Number(userRating)} />
 				</div>
 				<div className={styles['film-content-container']}>
 					<div className={styles['film-content-element']}>
@@ -63,7 +63,7 @@ const FilmContent: React.FC<FilmContentProps> = ({ film }) => {
 					</div>
 					<div className={styles['film-content-element']}>
 						<span>Рейтинг: </span>
-						<span>{film.total_rates_count}</span>
+						<span>{film.rating}</span>
 					</div>
 
 					<p className={styles['description']}>Описание </p>
