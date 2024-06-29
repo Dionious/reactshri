@@ -50,7 +50,7 @@ const FilmContent: React.FC<FilmContentProps> = ({ film }) => {
 			<div className={styles['film-content']}>
 				<div className={styles['wrapper']}>
 					<h2>{film.title}</h2>
-					<RatingForm onRateMovie={handleRateMovie} currentRating={Number(film.rating)} />
+					<RatingForm onRateMovie={handleRateMovie} currentRating={Number(userRating)} />
 				</div>
 				<p>Жанр: {film.genre}</p>
 				<p>Год выпуска: {film.release_year}</p>
