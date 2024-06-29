@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Select, { StylesConfig } from 'react-select';
 import styles from './styles/GenresFilter.module.css';
-import CustomDropdownIndicator from './CustomDropdownIndicator';
 import { setGenre } from '../../slices/filmsSlice';
-import { RootState } from '../../store/store';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
@@ -29,30 +26,6 @@ const genres: OptionType[] = [
 	{ value: 'war', label: 'Военный' },
 ];
 
-const customStyles: StylesConfig<OptionType> = {
-	control: (provided, state) => ({
-		...provided,
-		borderRadius: '8px',
-		boxShadow: 'none',
-		borderColor: state.menuIsOpen ? '#FF5500' : '#ccc',
-		'&:hover': {
-			borderColor: state.menuIsOpen ? '#FF5500' : '#aaa',
-		},
-	}),
-	menu: (provided) => ({
-		...provided,
-		borderRadius: '8px',
-	}),
-	menuList: (provided) => ({
-		...provided,
-		maxHeight: 'none',
-	}),
-	option: (provided, state) => ({
-		...provided,
-		color: state.isSelected ? 'white' : 'black',
-	}),
-};
-
 const GenresFilter: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -61,7 +34,7 @@ const GenresFilter: React.FC = () => {
 	const queryParams = queryString.parse(location.search);
 	const initialSelectedGenre = genres.find((genre) => genre.value === queryParams.genre?.toString()) || null;
 	const [selectedGenre, setSelectedGenre] = useState<OptionType | null>(initialSelectedGenre);
-	const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (initialSelectedGenre) {
@@ -69,7 +42,9 @@ const GenresFilter: React.FC = () => {
 		}
 	}, [initialSelectedGenre, dispatch]);
 
-	const handleGenreChange = (selectedOption: OptionType | null) => {
+	const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const selectedValue = event.target.value;
+		const selectedOption = genres.find((genre) => genre.value === selectedValue) || null;
 		setSelectedGenre(selectedOption);
 
 		const genreValue = selectedOption?.value || '';
@@ -86,22 +61,33 @@ const GenresFilter: React.FC = () => {
 		navigate({ search }, { replace: true });
 	};
 
+	const handleFocus = () => {
+		setIsOpen(true);
+	};
+
+	const handleClick = (e) => {
+		console.log(e);
+		if (e.target.className.includes('open')) {
+			setIsOpen(false);
+		} else setIsOpen(true);
+	};
+
 	return (
-		<div>
+		<div className={styles['genre-wrapper']}>
 			<label className={styles['genre-label']}>Жанр</label>
-			<Select
-				value={selectedGenre}
+			<select
+				value={selectedGenre?.value || ''}
 				onChange={handleGenreChange}
-				options={genres}
-				styles={customStyles}
-				components={{
-					IndicatorSeparator: () => null,
-					DropdownIndicator: (props) => <CustomDropdownIndicator {...props} menuIsOpen={menuIsOpen} />,
-				}}
-				placeholder="Выберите жанр"
-				onMenuOpen={() => setMenuIsOpen(true)}
-				onMenuClose={() => setMenuIsOpen(false)}
-			/>
+				className={`${styles['custom-select']} ${isOpen ? styles['open'] : ''}`}
+				onClick={handleClick}
+			>
+				{genres.map((genre) => (
+					<option key={genre.value} value={genre.value}>
+						{genre.label}
+					</option>
+				))}
+			</select>
+			<span className={`${styles['icon']} ${isOpen ? styles['open'] : ''}`}></span>
 		</div>
 	);
 };
