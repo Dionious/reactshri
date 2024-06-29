@@ -12,7 +12,6 @@ export default function Films() {
 					<FilmListProvider/>
 				</div>
 			</div>
-			<div id={'modal-root'}></div>
 		</>
 	)
 	;
