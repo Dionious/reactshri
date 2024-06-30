@@ -1,8 +1,34 @@
-# React + Vite
+Привет! Расскажу ниже немного об архитектуре и дальше опишу основные моменты на которые стоит обратить внимание.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Архитектура
 
-Currently, two official plugins are available:
+Основной проект - папка src в корне репы:
+1. components - все компоненты
+ actors - актеры все что связано с каруселью
+ filmContent - описание фильма на странице конкрретного фильма
+ filmList - список фильмов на главной
+ filters - фильтры на главной
+ header - хедер страницы
+ loader - лоадер при загрузке
+ modal - модальное окно
+ ratingForm - форма выбора оценки
+ searchFilmInput - инпут для поиска фильма
+2. pages - основные страницы
+   filmPage - страница фильма
+   filmListPage - страница со списком фильмов
+3. slices - слайсы приложения
+  apislice - слайс для запросов
+  authSlice - слай для аутентификации
+  filmsSlice - слайс для информации о фильтрах
+4. store - redux хранилище
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Проект на Next - папка my-next-app в корне репы:
+Там то же самое только добавляется папка app для динамический сегментов и роутинга
+/[genre]/[year] - динамические сегменты для фильтров
+/films/[id] - страница фильма
+
+# Важное
+Запуск основного проекта через npm install запустить через npm run dev
+Запуск next проекта через cd my-next-app npm install и так же npm run dev
+Предварительно поднять два сервера не беке
+Если есть какие-либо вопросы - мой тг для связи https://t.me/Polpolla
