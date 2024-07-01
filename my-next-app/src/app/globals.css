@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../../public/fonts/sf-pro-text/SFProText-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../../public/fonts/sf-pro-text/SFProText-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #EDEDED;
+    font-family: 'SF Pro Text', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

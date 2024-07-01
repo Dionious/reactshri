@@ -1,0 +1,23 @@
+.film-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    margin-bottom: 24px;
+
+}
+.no-films-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 5px;
+    height: 100vh; /* Чтобы лоадер занимал всю высоту экрана */
+}
+.not-found {
+    font-size: 16px;
+    font-weight: bold;
+}
+.repeat {
+    font-size: 14px;
+    color: #999FA6;
+}

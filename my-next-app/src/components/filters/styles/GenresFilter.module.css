@@ -1,0 +1,21 @@
+.custom-select {
+    background: #fff url('../assets/icon.svg') no-repeat 95% center;
+    background-size: 16px;
+    padding: 12px 0 12px 10px;
+    border-radius: 8px;
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0;
+    width: 360px;
+    appearance: none;
+    background-color: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+.custom-select:focus {
+    border-color: #FF5500; /* Цвет рамки при фокусе */
+}

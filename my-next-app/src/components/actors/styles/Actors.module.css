@@ -1,0 +1,65 @@
+.carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slideWrapper {
+    display: flex;
+    align-content: center;
+    transition: transform 0.5s ease;
+    column-gap: 24px;
+}
+
+.slide {
+    flex: 0 0 auto;
+    width: 160px;
+    height: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.actorImage {
+    width: 160px;
+    height: 230px;
+    border-radius: 8px;
+}
+
+.actorName {
+    margin-top: 10px;
+}
+
+.prevButton,
+.nextButton {
+    background: url("../assets/navigate.svg") no-repeat center;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 40%;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.prevButton {
+    transform: rotate(-180deg);
+    left: 10px;
+}
+
+.nextButton {
+    right: 10px;
+}
+
+.prevButtonDisabled {
+    opacity: 0.8;
+}
+
+.actorsWrapper {
+    margin: 24px 0;
+}
+
+.header {
+    margin-bottom: 24px;
+    margin-left: 10px;
+}
